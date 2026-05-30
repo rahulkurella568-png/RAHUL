@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P & O2C Cycles - Oracle Fusion Financials</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container { max-width: 1000px; margin: 0 auto; background: white; }
+        .header {
+            background: linear-gradient(135deg, #1a3a5c 0%, #2e5090 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .content { padding: 40px; }
+        h2 { 
+            color: #1a3a5c; 
+            border-bottom: 3px solid #2e5090; 
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #2e5090;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            page-break-after: avoid;
+        }
+        .mindmap {
+            background: #f9f9f9;
+            border-left: 4px solid #2e5090;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        th {
+            background-color: #2e5090;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f0f5fa; }
+        .section { margin: 30px 0; }
+        .checklist {
+            background: #e8f0f7;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .checklist label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .kpi-card {
+            background: #f0f5fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #2e5090;
+        }
+        .footer {
+            background: #1a3a5c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        @media print {
+            body { background: white; }
+            .container { max-width: 100%; box-shadow: none; }
+            h2 { page-break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ORACLE FUSION FINANCIALS</h1>
+            <p>P2P (Procure-to-Pay) & O2C (Order-to-Cash) Cycles</p>
+            <p style="font-size: 0.95em; margin-top: 15px;">Comprehensive Data Structures & Process Flow</p>
+        </div>
+
+        <div class="content">
+            <!-- OVERVIEW -->
+            <h2>1. DOCUMENT OVERVIEW</h2>
+            <div class="section">
+                <h3>Purpose</h3>
+                <p>This document provides a detailed breakdown of Procure-to-Pay (P2P) and Order-to-Cash (O2C) cycles in Oracle Fusion Financials.</p>
+                <table style="margin-top: 15px;">
+                    <tr><th>Field</th><th>Value</th></tr>
+                    <tr><td>Created Date</td><td>May 30, 2026</td></tr>
+                    <tr><td>Version</td><td>1.0</td></tr>
+                    <tr><td>Target System</td><td>Oracle Fusion Cloud Financials</td></tr>
+                    <tr><td>Modules Covered</td><td>AP, AR, PO, Inventory, GL, SLA</td></tr>
+                </table>
+            </div>
+
+            <!-- P2P CYCLE -->
+            <h2>2. PROCURE-TO-PAY (P2P) CYCLE</h2>
+            <div class="section">
+                <h3>Definition</h3>
+                <p>P2P is the complete procurement lifecycle from supplier identification through payment, encompassing purchase requisitions, purchase orders, goods receipt, invoice matching, approval, and payment processing.</p>
+
+                <h3>Key Objectives</h3>
+                <ul style="margin-left: 20px;">
+                    <li>✓ Control spend and ensure compliance</li>
+                    <li>✓ Optimize supplier relationships</li>
+                    <li>✓ Ensure three-way matching (PO-Receipt-Invoice)</li>
+                    <li>✓ Minimize payment errors and duplicate invoices</li>
+                    <li>✓ Maintain audit trail for compliance</li>
+                </ul>
+
+                <h3>P2P Process Flow</h3>
+                <table>
+                    <tr>
+                        <th>Step</th><th>Process</th><th>Owner</th><th>Key Outcome</th>
+                    </tr>
+                    <tr>
+                        <td>1</td><td>Requisition Creation</td><td>Requestor</td><td>Approval for purchase</td>
+                    </tr>
+                    <tr>
+                        <td>2</td><td>Purchase Order (PO) Creation</td><td>Buyer</td><td>Formal commitment</td>
+                    </tr>
+                    <tr>
+                        <td>3</td><td>Goods Receipt (GR)</td><td>Warehouse/Receiving</td><td>Receipt into inventory</td>
+                    </tr>
+                    <tr>
+                        <td>4</td><td>Invoice Receipt</td><td>AP Clerk</td><td>Supplier invoice logged</td>
+                    </tr>
+                    <tr>
+                        <td>5</td><td>Three-Way Match</td><td>System/AP</td><td>PO-GR-Invoice validation</td>
+                    </tr>
+                    <tr>
+                        <td>6</td><td>Invoice Approval</td><td>Manager/Approver</td><td>Approved for payment</td>
+                    </tr>
+                    <tr>
+                        <td>7</td><td>Payment Processing</td><td>Treasurer/AP</td><td>Check/ACH/Wire payment</td>
+                    </tr>
+                </table>
+
+                <h3>P2P Mindmap Visualization</h3>
+                <div class="mindmap">PROCURE-TO-PAY (P2P) CYCLE
+
+1. REQUISITION PHASE
+   ├─ Create Purchase Requisition (PUR_REQ)
+   ├─ Approval Workflow (BPM)
+   └─ Requisition Line Items
+
+2. PROCUREMENT PHASE
+   ├─ Create Purchase Order (PO) from Req
+   ├─ PO Header & Lines
+   ├─ Supplier Selection
+   ├─ Terms & Conditions
+   └─ PO Distribution (GL accrual accounts)
+
+3. RECEIPT PHASE
+   ├─ Goods Receipt (Receiving)
+   ├─ Receipt Inspection
+   ├─ Quality Check (if configured)
+   ├─ Inventory Movement
+   └─ GL Impact: Debit Inventory/Asset, Credit Accrual
+
+4. INVOICE PHASE
+   ├─ Invoice Data Entry (Manual/OCR/EDI)
+   ├─ Invoice Line Matching
+   ├─ Three-Way Validation
+   │  ├─ PO ↔ GR ↔ Invoice Match
+   │  └─ Variance Tolerance Check
+   ├─ Hold Rules Applied (if any)
+   └─ GL Impact: Debit COGS/Expense, Credit AP
+
+5. APPROVAL & PAYMENT
+   ├─ Approval Workflows (AMX Rules)
+   ├─ Payment Process Request (PPR)
+   ├─ Payment Method Selection
+   └─ GL Impact: Debit AP, Credit Cash</div>
+            </div>
+
+            <!-- O2C CYCLE -->
+            <h2>3. ORDER-TO-CASH (O2C) CYCLE</h2>
+            <div class="section">
+                <h3>Definition</h3>
+                <p>O2C is the complete revenue lifecycle from customer order creation through cash collection, encompassing sales orders, shipment, invoicing, revenue recognition, payment collection, and reconciliation.</p>
+
+                <h3>Key Objectives</h3>
+                <ul style="margin-left: 20px;">
+                    <li>✓ Streamline sales-to-collection process</li>
+                    <li>✓ Ensure accurate revenue recognition (ASC 606/IFRS 15)</li>
+                    <li>✓ Minimize Days Sales Outstanding (DSO)</li>
+                    <li>✓ Manage customer credit and collections</li>
+                    <li>✓ Maintain accurate receivables aging</li>
+                </ul>
+
+                <h3>O2C Process Flow</h3>
+                <table>
+                    <tr>
+                        <th>Step</th><th>Process</th><th>Owner</th><th>Key Outcome</th>
+                    </tr>
+                    <tr>
+                        <td>1</td><td>Sales Order Creation</td><td>Sales/Order Entry</td><td>Customer order confirmed</td>
+                    </tr>
+                    <tr>
+                        <td>2</td><td>Credit Check</td><td>Credit Manager</td><td>Credit limit verification</td>
+                    </tr>
+                    <tr>
+                        <td>3</td><td>Shipment</td><td>Warehouse/Logistics</td><td>Goods shipped</td>
+                    </tr>
+                    <tr>
+                        <td>4</td><td>Invoice Generation</td><td>Billing/AR</td><td>AR Invoice created</td>
+                    </tr>
+                    <tr>
+                        <td>5</td><td>Revenue Recognition</td><td>Revenue/AR</td><td>Revenue posted to GL</td>
+                    </tr>
+                    <tr>
+                        <td>6</td><td>Payment Receipt</td><td>Lockbox/AR</td><td>Cash received</td>
+                    </tr>
+                </table>
+
+                <h3>O2C Mindmap Visualization</h3>
+                <div class="mindmap">ORDER-TO-CASH (O2C) CYCLE
+
+1. SALES ORDER PHASE
+   ├─ Customer Creation (CRM/AR)
+   ├─ Sales Order Entry
+   ├─ Order Lines (Item, Qty, Price)
+   ├─ Price List Application
+   └─ Order Booking
+
+2. CREDIT & APPROVAL
+   ├─ Credit Limit Check
+   ├─ Credit Review (if flagged)
+   ├─ Approval Workflow
+   └─ Order Release
+
+3. FULFILLMENT PHASE
+   ├─ Pick & Pack
+   ├─ Shipment Creation
+   ├─ Delivery/Receipt by Customer
+   ├─ Proof of Delivery (POD)
+   └─ GL Impact: Debit COGS, Credit Inventory
+
+4. INVOICING & RECOGNITION
+   ├─ Invoice Auto-Generation from Shipment
+   ├─ Invoice Header & Lines
+   ├─ Tax Calculation
+   ├─ Revenue Recognition Rules (SLA)
+   └─ GL Impact: Debit AR, Credit Revenue
+
+5. COLLECTION & CASH
+   ├─ Invoice Delivery to Customer
+   ├─ Payment Terms Application
+   ├─ Lockbox Processing (if configured)
+   ├─ Payment Receipt
+   └─ GL Impact: Debit Cash, Credit AR</div>
+            </div>
+
+            <!-- KPI SECTION -->
+            <h2>4. KEY PERFORMANCE INDICATORS (KPIs)</h2>
+            <div class="section">
+                <h3>P2P KPIs</h3>
+                <table>
+                    <tr>
+                        <th>KPI</th><th>Target</th><th>Owner</th>
+                    </tr>
+                    <tr>
+                        <td>3-Way Match Rate</td><td>≥ 95%</td><td>AP</td>
+                    </tr>
+                    <tr>
+                        <td>Invoice Processing Cost</td><td>≤ $5/invoice</td><td>AP Manager</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Discount Capture</td><td>≥ 80%</td><td>Treasurer</td>
+                    </tr>
+                    <tr>
+                        <td>Days Payable Outstanding (DPO)</td><td>45-60 days</td><td>Treasury</td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate Invoice Rate</td><td>≤ 0.5%</td><td>AP</td>
+                    </tr>
+                </table>
+
+                <h3>O2C KPIs</h3>
+                <table>
+                    <tr>
+                        <th>KPI</th><th>Target</th><th>Owner</th>
+                    </tr>
+                    <tr>
+                        <td>Days Sales Outstanding (DSO)</td><td>30-45 days</td><td>AR Manager</td>
+                    </tr>
+                    <tr>
+                        <td>Collection Rate</td><td>≥ 95%</td><td>Collections</td>
+                    </tr>
+                    <tr>
+                        <td>Invoice Accuracy</td><td>≥ 99%</td><td>Billing</td>
+                    </tr>
+                    <tr>
+                        <td>Bad Debt % Revenue</td><td>≤ 2%</td><td>AR Manager</td>
+                    </tr>
+                    <tr>
+                        <td>Order Fulfillment Rate</td><td>≥ 98%</td><td>Warehouse</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- BEST PRACTICES -->
+            <h2>5. BEST PRACTICES & SUMMARY</h2>
+            <div class="section">
+                <h3>✓ P2P Best Practices</h3>
+                <ol style="margin-left: 20px;">
+                    <li>Enforce 3-way matching - Never bypass PO-GR-Invoice validation</li>
+                    <li>Leverage SLA rules - Auto-derive GL accounts to reduce manual error</li>
+                    <li>Monitor encumbrances - Close month-end with zero encumbrance balance</li>
+                    <li>Capture early pay discounts - Targets typically 50%+ capture rate</li>
+                    <li>Centralize holds - Use hold rules instead of manual review</li>
+                    <li>Implement duplicate checks - Prevent vendor fraud and overpayments</li>
+                </ol>
+
+                <h3>✓ O2C Best Practices</h3>
+                <ol style="margin-left: 20px;">
+                    <li>Revenue recognition compliance - Implement ASC 606 properly from day one</li>
+                    <li>Credit policy enforcement - Prevent bad debt by enforcing credit limits</li>
+                    <li>DSO management - Target industry-standard DSO (typically 30-45 days)</li>
+                    <li>Lockbox automation - Reduce days to cash through automated matching</li>
+                    <li>Collection process discipline - Escalate past-due > 30 days immediately</li>
+                    <li>Bad debt provisioning - Monthly reserve for high-risk receivables</li>
+                </ol>
+            </div>
+
+            <!-- MONTH-END CLOSE -->
+            <h2>6. MONTH-END CLOSE CHECKLIST</h2>
+            <div class="section">
+                <h3>P2P Month-End Close Activities</h3>
+                <div class="checklist">
+                    <label><input type="checkbox"> Reconcile AP Sub-ledger to GL</label>
+                    <label><input type="checkbox"> Review Outstanding Invoices & Accruals</label>
+                    <label><input type="checkbox"> Process Unmatched Receipts (Accrual)</label>
+                    <label><input type="checkbox"> Review & Clear AP Holds</label>
+                    <label><input type="checkbox"> Process Final Invoices & Payments</label>
+                    <label><input type="checkbox"> Reconcile Vendor Statements</label>
+                    <label><input type="checkbox"> Validate Withholding Tax Accruals</label>
+                    <label><input type="checkbox"> GL period close certification</label>
+                </div>
+
+                <h3>O2C Month-End Close Activities</h3>
+                <div class="checklist">
+                    <label><input type="checkbox"> Reconcile AR Sub-ledger to GL</label>
+                    <label><input type="checkbox"> Review AR Aging & Collections</label>
+                    <label><input type="checkbox"> Revenue Recognition Analysis (ASC 606)</label>
+                    <label><input type="checkbox"> Process Revenue Accruals/Deferrals</label>
+                    <label><input type="checkbox"> Bad Debt Provision Review</label>
+                    <label><input type="checkbox"> Reconcile Customer Statements</label>
+                    <label><input type="checkbox"> Clear Unmatched Cash</label>
+                    <label><input type="checkbox"> GL period close certification</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Oracle Fusion Financials - P2P & O2C Cycle Guide</strong></p>
+            <p>Version 1.0 | Created: May 30, 2026</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">
+                To print this document as PDF: Use Ctrl+P (or Cmd+P on Mac) → Select "Print to PDF" or your PDF printer
+            </p>
+        </div>
+    </div>
+</body>
+</html>

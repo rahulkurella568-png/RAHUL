@@ -1,0 +1,312 @@
+╔═════════════════════════════════════════════════════════════════════════════╗
+║                      P2P & O2C QUICK REFERENCE CARD                        ║
+║                      Oracle Fusion Financials 2026                         ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+══════════════════════════════════════════════════════════════════════════════
+P2P (PROCURE-TO-PAY) CYCLE AT A GLANCE
+══════════════════════════════════════════════════════════════════════════════
+
+PROCESS FLOW:
+  Requisition → PO → Receipt → Invoice → Match → Approve → Pay → Reconcile
+
+KEY STEPS:
+  1. Create Requisition (PUR_REQ)
+  2. Generate Purchase Order (PO_HEADERS_ALL)
+  3. Receive Goods (RCV_TRANSACTIONS)
+  4. Enter Invoice (AP_INVOICES_ALL)
+  5. Validate 3-Way Match (AP_MATCHING_SETS)
+  6. Apply Holds if needed (AP_HOLDS)
+  7. Process Payment (AP_PAYMENTS)
+  8. Reconcile to GL
+
+GL IMPACT:
+  PO Created     → Debit Encumbrance Asset, Credit Encumbrance Liability
+  Goods Received → Debit Inventory, Credit Accrual (reverse encumbrance)
+  Invoice Posted → Debit COGS/Expense, Credit AP Payable
+  Payment Made   → Debit AP Payable, Credit Cash
+
+KEY CONTROLS:
+  • 3-Way Match (PO ↔ Receipt ↔ Invoice)
+  • Invoice Approval Workflow
+  • Duplicate Invoice Check
+  • Variance Tolerance Rules
+  • Hold Rules (Supplier quality, budget, etc.)
+  • Encumbrance Monitoring
+
+KPI TARGETS:
+  3-Way Match Rate:           ≥ 95%
+  Invoice Processing Cost:    ≤ $5/invoice
+  Payment Discount Capture:   ≥ 80%
+  Days Payable Outstanding:   45-60 days
+  Duplicate Invoice Rate:     ≤ 0.5%
+
+COMMON PITFALLS:
+  ✗ Bypasssing 3-way match
+  ✗ Misaligned GL accounts (SLA issues)
+  ✗ Encumbrance not clearing
+  ✗ Missed early-pay discounts
+  ✗ Hold rules not configured
+
+BEST PRACTICES:
+  ✓ Enforce 3-way matching
+  ✓ Use SLA rules for GL derivation
+  ✓ Monitor encumbrances daily
+  ✓ Capture 50%+ of available discounts
+  ✓ Configure hold rules centrally
+  ✓ Prevent duplicate invoices
+  ✓ Reconcile vendor statements
+  ✓ Optimize DPO vs. supplier relations
+
+══════════════════════════════════════════════════════════════════════════════
+O2C (ORDER-TO-CASH) CYCLE AT A GLANCE
+══════════════════════════════════════════════════════════════════════════════
+
+PROCESS FLOW:
+  Sales Order → Credit Check → Shipment → Invoice → Revenue Recog → Collection → Reconcile
+
+KEY STEPS:
+  1. Create Sales Order (ONT_ORDER_HEADERS_ALL)
+  2. Credit Limit Check (HZ_CUST_ACCOUNTS)
+  3. Ship Goods (WSH_DELIVERY_DETAILS)
+  4. Generate Invoice (RA_CUSTOMER_TRX_ALL)
+  5. Revenue Recognition (ASC 606)
+  6. Collect Payment (RA_CUSTOMER_RECEIPT_ALL)
+  7. Apply to Invoice (AR_RECEIVABLE_APPLICATIONS_ALL)
+  8. Reconcile to GL
+
+GL IMPACT:
+  Sales Order    → No GL entry (memo only)
+  Goods Shipped  → Debit COGS, Credit Inventory
+  Invoice Posted → Debit AR Receivable, Credit Revenue
+  Revenue Recog  → Debit AR/Cash, Credit Revenue (when service delivered)
+  Cash Received  → Debit Cash/Bank, Credit AR Receivable
+  Bad Debt       → Debit Bad Debt Expense, Credit AR Receivable
+
+KEY CONTROLS:
+  • Credit Limit Enforcement
+  • Price Authorization
+  • Revenue Recognition (ASC 606)
+  • Collections Aging
+  • Bad Debt Provisioning
+  • Discount Authorization
+  • Write-off Approval
+
+KPI TARGETS:
+  Days Sales Outstanding:     30-45 days
+  Collection Rate:            ≥ 95%
+  Invoice Accuracy:           ≥ 99%
+  Bad Debt % Revenue:         ≤ 2%
+  Order Fulfillment Rate:     ≥ 98%
+  Credit Limit Utilization:   60-80%
+
+COMMON PITFALLS:
+  ✗ Revenue recognized in wrong period
+  ✗ AR-GL reconciliation variance
+  ✗ Credit limits not enforced
+  ✗ Lockbox not auto-matching
+  ✗ Bad debt provision not calculated
+
+BEST PRACTICES:
+  ✓ Implement ASC 606 from day one
+  ✓ Enforce credit limits
+  ✓ Target industry-standard DSO
+  ✓ Automate lockbox matching
+  ✓ Escalate collections > 30 days
+  ✓ Monthly bad debt provisioning
+  ✓ Weekly AR-GL reconciliation
+  ✓ Maintain customer master quality
+
+══════════════════════════════════════════════════════════════════════════════
+INTEGRATED P2P & O2C
+══════════════════════════════════════════════════════════════════════════════
+
+CASH CONVERSION CYCLE:
+  CCC = DSO + DIO - DPO
+  Target: ≤ 30 days
+
+  Where:
+  DSO = Days Sales Outstanding (AR collection speed)
+  DIO = Days Inventory Outstanding (inventory turnover)
+  DPO = Days Payable Outstanding (AP payment terms)
+
+SYNCHRONIZED PROCESSES:
+  Inventory Movement → GL COGS posting synchronized
+  GL Posting → AP & AR distributions tied to SLA rules
+  Payment Terms → DSO vs. DPO optimization
+  Period Close → P2P & O2C windows coordinated
+
+KEY INTEGRATION POINTS:
+  1. Inventory: Purchased (P2P) → Shipped (O2C)
+  2. GL: AP Distribution ← → AR Distribution (SLA rules)
+  3. Master Data: Suppliers ← → Customers (intercompany scenarios)
+  4. Subledger Accounting: SLA derives GL for both cycles
+  5. Cash Management: P2P payments ← → O2C collections
+  6. Reporting: Consolidated P&L from both cycles
+  7. Period Close: Accruals, deferrals, reconciliation
+
+══════════════════════════════════════════════════════════════════════════════
+MONTH-END CLOSE CHECKLIST
+══════════════════════════════════════════════════════════════════════════════
+
+P2P CLOSE (Due by Day 2 of close):
+  ☐ Reconcile AP Sub-ledger to GL
+  ☐ Review outstanding invoices & accruals
+  ☐ Process unmatched receipts (accrual)
+  ☐ Review & clear AP holds
+  ☐ Process final invoices & payments
+  ☐ Reconcile vendor statements
+  ☐ Validate withholding tax accruals
+  ☐ GL certification
+
+O2C CLOSE (Due by Day 3 of close):
+  ☐ Reconcile AR Sub-ledger to GL
+  ☐ Review AR aging & collections
+  ☐ Revenue recognition analysis (ASC 606)
+  ☐ Process revenue accruals/deferrals
+  ☐ Bad debt provision review
+  ☐ Reconcile customer statements
+  ☐ Clear unmatched cash
+  ☐ GL certification
+
+══════════════════════════════════════════════════════════════════════════════
+SUBLEDGER ACCOUNTING (SLA) - THE SECRET WEAPON
+══════════════════════════════════════════════════════════════════════════════
+
+WHY SLA MATTERS:
+  Eliminates 80% of manual GL effort
+  Ensures consistent account coding
+  Reduces period-end reconciliation
+  Provides audit trail
+  Enables real-time GL posting
+
+P2P SLA RULES:
+  Event: AP Invoice
+  Condition: IF Supplier Type = "Manufacturing" AND Amount > $10,000
+  Then Derive: GL Account = Manuf COGS (4100-50)
+
+O2C SLA RULES:
+  Event: RA Invoice
+  Condition: IF Customer Class = "Reseller" AND Product = "Software"
+  Then Derive: GL Account = Deferred Revenue (2500)
+
+CONFIG LOCATION:
+  Navigator → Accounting → Setup → Subledger Accounting
+  → Define Accounting Methods → Create Mapping Sets
+
+══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING GUIDE
+══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM: GL doesn't balance after P2P & O2C posting
+SOLUTION: 
+  1. Check SLA rules are deriving to correct GL accounts
+  2. Verify P2P encumbrance is clearing properly
+  3. Ensure O2C revenue timing matches shipment
+  4. Run GL reconciliation report
+
+PROBLEM: DSO is trending upward month-over-month
+SOLUTION:
+  1. Review AR aging report for past-due accounts
+  2. Escalate collections for accounts > 30 days
+  3. Check credit policy enforcement
+  4. Analyze bad debt reserve adequacy
+
+PROBLEM: DPO is dropping below target
+SOLUTION:
+  1. Review payment discount capture
+  2. Analyze payment term effectiveness
+  3. Check vendor statement reconciliation
+  4. Optimize payment schedule
+
+PROBLEM: 3-way match failing frequently
+SOLUTION:
+  1. Review variance tolerance thresholds
+  2. Check for GR timing issues
+  3. Verify invoice matching rules
+  4. Train users on matching process
+
+══════════════════════════════════════════════════════════════════════════════
+KEY ORACLE TABLES - QUICK LOOKUP
+══════════════════════════════════════════════════════════════════════════════
+
+P2P TABLES:
+  PO_HEADERS_ALL              Purchase Order headers
+  PO_LINES_ALL                PO line items
+  RCV_TRANSACTIONS            Goods receipt transactions
+  AP_INVOICES_ALL             Supplier invoices
+  AP_INVOICE_DISTRIBUTIONS    GL distributions
+  AP_HOLDS                    Invoice holds
+
+O2C TABLES:
+  ONT_ORDER_HEADERS_ALL       Sales Order headers
+  ONT_ORDER_LINES_ALL         Sales order lines
+  WSH_DELIVERY_DETAILS        Shipment details
+  RA_CUSTOMER_TRX_ALL         AR invoices
+  RA_CUSTOMER_RECEIPT_ALL     Cash receipts
+  AR_RECEIVABLE_APPLICATIONS  Receipt-to-invoice matching
+
+COMMON TABLES:
+  GL_BALANCES                 GL account balances
+  GL_JE_HEADERS               Journal entry headers
+  GL_JE_LINES                 Journal entry lines
+  HZ_CUST_ACCOUNTS            Customer master
+  PO_VENDORS                  Supplier master
+
+══════════════════════════════════════════════════════════════════════════════
+CONFIGURATION SHORTCUTS
+══════════════════════════════════════════════════════════════════════════════
+
+Setup & Maintenance Tasks:
+  P2P Matching        → Navigator > Manage Matching Options
+  AP Holds            → Navigator > Manage Hold Rules
+  GL Distribution     → Navigator > Manage Distribution Sets
+  AR Collections      → Navigator > Manage Collections Rules
+  Revenue Recognition → Navigator > Manage Revenue Recognition
+  Credit Rules        → Navigator > Manage Credit Rules
+  SLA Configuration   → Navigator > Define Accounting Methods
+
+══════════════════════════════════════════════════════════════════════════════
+MATURITY LEVELS
+══════════════════════════════════════════════════════════════════════════════
+
+LEVEL 1: Manual & Reactive
+  • Manual invoice entry & GL posting
+  • Month-end close = 15+ days
+  • High DSO (60+), High DPO volatility
+
+LEVEL 2: Systematic & Documented
+  • Automated 3-way matching
+  • Basic SLA rules
+  • Month-end close = 10-12 days
+
+LEVEL 3: Optimized & Integrated
+  • Full automation (Lockbox, OCR, E-invoicing)
+  • Advanced SLA mapping
+  • Month-end close = 5-7 days
+  • Industry-leading DSO & DPO
+
+LEVEL 4: Predictive & Autonomous
+  • Predictive analytics
+  • Machine learning for exceptions
+  • Continuous close capabilities
+  • Strategic partnerships (EDI, APIs)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+REMEMBER:
+  📌 P2P = Spend Control + Cash Optimization
+  📌 O2C = Revenue Assurance + Cash Collection
+  📌 Integration = GL Accuracy + Real-time Reporting
+  📌 SLA = Automation + Reduced Manual Effort
+  📌 Controls = Compliance + Fraud Prevention
+  📌 KPIs = Performance + Continuous Improvement
+
+═══════════════════════════════════════════════════════════════════════════════
+
+For detailed information, refer to:
+  • P2P_O2C_CYCLES_GUIDE.md (Markdown - comprehensive)
+  • P2P_O2C_CYCLES_GUIDE.html (Browser - presentation)
+  • README_P2P_O2C.md (Quick reference guide)
+
+═══════════════════════════════════════════════════════════════════════════════
